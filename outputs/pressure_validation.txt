@@ -1,0 +1,92 @@
+======================================================================
+WIN-PROBABILITY MODEL
+Innings 1 win-prob model (5-fold, split by match): log-loss 0.616 (no-model 0.693), Brier 0.213, AUC 0.721
+  calibration (predicted vs actual win rate):
+             pred  actual      n
+bin                             
+(0.0, 0.1]  0.068   0.158   1839
+(0.1, 0.2]  0.157   0.192   5649
+(0.2, 0.3]  0.252   0.241  10171
+(0.3, 0.4]  0.353   0.350  13842
+(0.4, 0.5]  0.454   0.443  18882
+(0.5, 0.6]  0.548   0.540  20415
+(0.6, 0.7]  0.648   0.672  15661
+(0.7, 0.8]  0.744   0.738  10373
+(0.8, 0.9]  0.844   0.833   5628
+(0.9, 1.0]  0.930   0.900   1423
+  coefficients (standardised): {'score': np.float64(1.25), 'wkts': np.float64(0.02), 'balls_left': np.float64(-1.39), 'wk_x_bl': np.float64(0.51), 'p0': np.float64(0.49), 'sqrt_resources': np.float64(1.86)}
+Innings 2 win-prob model (5-fold, split by match): log-loss 0.407 (no-model 0.692), Brier 0.132, AUC 0.894
+  calibration (predicted vs actual win rate):
+             pred  actual      n
+bin                             
+(0.0, 0.1]  0.033   0.031  20363
+(0.1, 0.2]  0.147   0.152   8919
+(0.2, 0.3]  0.250   0.255   7691
+(0.3, 0.4]  0.349   0.354   6487
+(0.4, 0.5]  0.450   0.442   6264
+(0.5, 0.6]  0.550   0.564   6234
+(0.6, 0.7]  0.652   0.679   6620
+(0.7, 0.8]  0.751   0.744   7712
+(0.8, 0.9]  0.851   0.828   8995
+(0.9, 1.0]  0.959   0.957  15861
+  coefficients (standardised): {'runs_needed': np.float64(-1.17), 'balls_left': np.float64(-1.21), 'wkts_left': np.float64(1.28), 'rrr': np.float64(-1.58), 'log_rn_bl': np.float64(-0.39), 'wk_x_bl': np.float64(0.76), 'p0': np.float64(0.41)}
+Sense check innings 1: run helps 100.0%, wicket hurts 100.0%, dot ball hurts 98.0%
+Sense check innings 2: run helps 100.0%, wicket hurts 100.0%, dot ball hurts 98.1%
+======================================================================
+Pressure score = 0.6*situation + 0.4*match importance (both standardised).
+Share of pressure-score variation explained: situation 68%, importance 28%
+
+Legal balls by pressure band (batting side):
+                    balls  runs/ball  dot %  boundary %  wicket %  avg LI  avg importance
+band                                                                                     
+Low (bottom 50%)  96298.0       1.40  34.99       18.55      5.35    0.62            1.13
+Medium (50-80%)   57771.0       1.37  36.30       18.50      5.62    1.06            1.30
+High (top 20%)    38376.0       1.42  34.83       19.13      6.35    1.85            1.58
+
+LIKE-FOR-LIKE (same innings, over and wickets-down; high vs low pressure):
+               runs/ball  dot rate  boundary rate  wicket rate
+Low pressure       1.451     0.360          0.204        0.057
+High pressure      1.403     0.353          0.189        0.061
+Change            -0.033    -0.018         -0.078        0.068
+
+What each band looks like:
+                  median_over  pct_2nd_inn  median_rrr_chase  median_wkts_left  pct_close_game  pct_knockout_or_must_win
+band                                                                                                                    
+Low (bottom 50%)         11.0         40.1              10.4               7.0            38.4                       4.7
+Medium (50-80%)           9.0         48.5               9.2               8.0            53.6                      16.8
+High (top 20%)           10.0         64.0               9.4               8.0            62.8                      54.5
+
+By pressure decile (1 = lowest, 10 = highest):
+          balls  runs/ball  dot %  boundary %  wicket %  avg LI  avg importance
+decile                                                                         
+1       19245.0       1.40  37.10       18.86      6.75    0.20            1.14
+2       19244.0       1.40  33.51       18.00      5.12    0.57            1.07
+3       19245.0       1.42  33.88       18.77      4.99    0.71            1.10
+4       19244.0       1.40  34.51       18.68      4.65    0.77            1.15
+5       19245.0       1.37  35.91       18.47      5.23    0.84            1.19
+6       19244.0       1.39  36.21       19.04      5.45    0.95            1.23
+7       19244.0       1.36  36.52       18.19      5.48    1.05            1.30
+8       19245.0       1.36  36.20       18.29      5.93    1.19            1.38
+9       19244.0       1.40  35.93       19.05      5.76    1.25            1.51
+10      19245.0       1.45  33.72       19.19      6.93    2.45            1.64
+
+Where pressure balls happen - phase (% of each band):
+band       Low (bottom 50%)  Medium (50-80%)  High (top 20%)
+phase                                                       
+Death                  22.3             18.2            27.5
+Middle                 52.2             41.8            37.0
+Powerplay              25.5             40.0            35.6
+
+Innings (3 = super over) (% of each band):
+band     Low (bottom 50%)  Medium (50-80%)  High (top 20%)
+innings                                                   
+1                    59.9             51.6            35.9
+2                    40.1             48.4            64.0
+3                     0.0              0.0             0.1
+
+Competition: % of its balls in each band:
+band         Low (bottom 50%)  Medium (50-80%)  High (top 20%)
+competition                                                   
+A-team                   71.9             19.7             8.4
+IPL                      60.9             26.0            13.1
+T20I                     39.6             34.0            26.5

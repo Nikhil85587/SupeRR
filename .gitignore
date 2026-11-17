@@ -1,0 +1,12 @@
+# The repository carries only code, documentation and results.
+# Supplied competition data, downloads and intermediate files are not committed.
+/*
+!/src/
+!/outputs/
+!/README.md
+!/requirements.txt
+!/run_all.py
+!/.gitignore
+__pycache__/
+*.pyc
+outputs/report_edits_*.md

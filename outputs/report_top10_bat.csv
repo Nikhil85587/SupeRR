@@ -1,0 +1,11 @@
+rank,player,country,ipl_teams,pres_balls,pressure_innings,pres_SR,pres_xSR,pres_outs,pres_x_outs,normal_level,pressure_level,win_pressure,rise,consistency_pct,median_pressure_innings,bad_day_pct,final_score,rank_5pct,rank_95pct,pct_boot_top10,rank_top15pct_cut,rank_top25pct_cut,rank_IPL_only,rank_T20I_only,raw_pres_per100,seasons_positive,team
+1,Vaibhav Sooryavanshi,India,Rajasthan Royals,156,10,209.62,176.54,8.0,6.3,32.14,30.65,0.23,-1.49,58.57,3.14,26.67,2.39,1,19,83.67,1,1,2.0,,30.47,2/2,India
+2,Rajat Patidar,,Royal Challengers Bengaluru,204,9,187.25,147.31,7.0,8.4,11.18,21.39,0.24,10.21,69.9,6.29,14.29,2.32,1,25,78.0,3,2,1.0,,53.24,2/2,—
+3,Heinrich Klaasen,South Africa,Sunrisers Hyderabad,196,12,181.63,149.29,11.0,11.3,12.04,18.46,0.38,6.42,75.21,2.0,5.88,1.93,1,19,79.33,6,6,5.0,38.0,43.56,3/3,South Africa
+4,Nicholas Pooran,West Indies,Lucknow Super Giants/Sunrisers Hyderabad,327,23,176.76,144.06,19.0,18.4,10.14,17.64,0.17,7.5,63.52,5.56,14.29,1.83,1,36,65.33,4,3,3.0,26.0,30.38,3/3,West Indies
+5,Shreyas Iyer,India,Kolkata Knight Riders/Punjab Kings,332,17,174.4,152.69,12.0,17.9,3.35,14.19,0.36,10.84,71.76,6.45,9.09,1.8,1,30,66.67,7,8,4.0,59.0,39.03,2/3,India
+6,Suryakumar Yadav,India,Mumbai Indians,551,31,169.51,149.73,27.0,27.0,15.34,18.41,0.23,3.07,60.52,3.31,13.89,1.65,1,26,66.33,5,5,6.0,5.0,24.01,2/3,India
+7,Pathum Nissanka,Sri Lanka,Delhi Capitals,718,33,132.87,130.03,29.0,36.8,8.74,11.86,0.07,3.12,70.49,5.06,10.53,1.29,3,41,45.0,2,7,,3.0,21.65,3/5,Sri Lanka
+8,Dasun Shanaka,Sri Lanka,Gujarat Titans/Rajasthan Royals,333,24,164.26,143.95,19.0,23.2,0.15,10.1,0.3,9.94,64.78,3.11,10.34,1.21,2,52,47.0,20,9,,1.0,31.95,5/5,Sri Lanka
+9,Phil Salt,England,Delhi Capitals/Kolkata Knight Riders/Royal Challengers Bengaluru,386,20,168.65,146.97,17.0,18.3,8.32,10.71,0.15,2.39,63.14,5.44,16.0,1.06,3,62,34.67,9,18,,4.0,12.14,3/4,England
+10,Jos Buttler,England,Gujarat Titans/Rajasthan Royals,499,29,149.9,147.19,17.0,24.9,8.23,11.08,0.16,2.85,69.96,3.21,17.65,1.05,4,50,31.0,29,11,18.0,10.0,22.78,3/5,England

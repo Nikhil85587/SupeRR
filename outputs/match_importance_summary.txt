@@ -1,0 +1,71 @@
+Team-matches: 1766
+
+Importance distribution by competition:
+              count  mean   std   min   25%   50%   75%   max
+competition                                                 
+A-team        60.0  0.95  0.27  0.70  0.77  0.77  1.16  1.54
+IPL          742.0  1.17  0.24  0.80  1.00  1.10  1.20  2.40
+T20I         964.0  1.38  0.26  0.92  1.15  1.38  1.65  3.50
+
+How often each reason applies (team-matches):
+ reasons
+Away                        683
+Normal                      408
+Neutral venue               400
+Opponent ranked top-3       261
+Must-win to save series     139
+Dead rubber                 128
+Series decider               72
+Opponent is an associate     69
+IPL do-or-die                58
+Rivalry                      48
+IPL already out              41
+Asia Cup Super 4             24
+Final                        14
+IPL Qualifier 1              10
+IPL Final                    10
+IPL Qualifier 2              10
+IPL Eliminator               10
+Semi-final                    8
+
+Top 15 most important team-matches:
+ match_date                        team                    opponent                                 comp_name  importance                                                                            reasons
+2025-09-28                       India                    Pakistan                             Asia Cup 2025         3.5                                   Final (2.0); Rivalry (1.75); Neutral venue (1.1)
+2025-09-28                    Pakistan                       India                             Asia Cup 2025         3.5 Final (2.0); Opponent ranked top-3 (#1) (1.4); Rivalry (1.75); Neutral venue (1.1)
+2022-10-14                 New Zealand                    Pakistan       New Zealand T20I Tri Series 2022/23         2.8                                      Final (2.0); Opponent ranked top-3 (#3) (1.4)
+2022-09-11                   Sri Lanka                    Pakistan               Mens Twenty20 Asia Cup 2022         2.8                 Final (2.0); Opponent ranked top-3 (#3) (1.4); Neutral venue (1.1)
+2023-05-29         Chennai Super Kings              Gujarat Titans                                  IPL 2023         2.4                                                        IPL Final (2.0); Away (1.2)
+2025-11-29                   Sri Lanka                    Pakistan             Pakistan T20I Tri-Series 2025         2.4                                                            Final (2.0); Away (1.2)
+2022-10-14                    Pakistan                 New Zealand       New Zealand T20I Tri Series 2022/23         2.4                                                            Final (2.0); Away (1.2)
+2026-05-31 Royal Challengers Bengaluru              Gujarat Titans                                  IPL 2026         2.4                                                        IPL Final (2.0); Away (1.2)
+2025-06-03                Punjab Kings Royal Challengers Bengaluru                                  IPL 2025         2.2                                               IPL Final (2.0); Neutral venue (1.1)
+2024-05-26       Kolkata Knight Riders         Sunrisers Hyderabad                                  IPL 2024         2.2                                               IPL Final (2.0); Neutral venue (1.1)
+2024-05-26         Sunrisers Hyderabad       Kolkata Knight Riders                                  IPL 2024         2.2                                               IPL Final (2.0); Neutral venue (1.1)
+2022-05-29              Gujarat Titans            Rajasthan Royals                                  IPL 2022         2.2                                               IPL Final (2.0); Neutral venue (1.1)
+2022-05-29            Rajasthan Royals              Gujarat Titans                                  IPL 2022         2.2                                               IPL Final (2.0); Neutral venue (1.1)
+2025-09-07                 Afghanistan                    Pakistan United Arab Emirates T20I Tri-Series 2025         2.2                                                   Final (2.0); Neutral venue (1.1)
+2025-09-07                    Pakistan                 Afghanistan United Arab Emirates T20I Tri-Series 2025         2.2                                                   Final (2.0); Neutral venue (1.1)
+
+IPL 2024 do-or-die / already-out flags:
+ match_date                        team                    opponent                                                 reasons
+2024-04-25 Royal Challengers Bengaluru         Sunrisers Hyderabad IPL do-or-die (loss = out / near-out) (1.5); Away (1.2)
+2024-04-28 Royal Challengers Bengaluru              Gujarat Titans IPL do-or-die (loss = out / near-out) (1.5); Away (1.2)
+2024-05-03              Mumbai Indians       Kolkata Knight Riders             IPL do-or-die (loss = out / near-out) (1.5)
+2024-05-04 Royal Challengers Bengaluru              Gujarat Titans             IPL do-or-die (loss = out / near-out) (1.5)
+2024-05-06              Mumbai Indians         Sunrisers Hyderabad                     IPL already out (dead rubber) (0.8)
+2024-05-09                Punjab Kings Royal Challengers Bengaluru             IPL do-or-die (loss = out / near-out) (1.5)
+2024-05-09 Royal Challengers Bengaluru                Punjab Kings IPL do-or-die (loss = out / near-out) (1.5); Away (1.2)
+2024-05-10              Gujarat Titans         Chennai Super Kings             IPL do-or-die (loss = out / near-out) (1.5)
+2024-05-11              Mumbai Indians       Kolkata Knight Riders         IPL already out (dead rubber) (0.8); Away (1.2)
+2024-05-12 Royal Challengers Bengaluru              Delhi Capitals             IPL do-or-die (loss = out / near-out) (1.5)
+2024-05-12              Delhi Capitals Royal Challengers Bengaluru IPL do-or-die (loss = out / near-out) (1.5); Away (1.2)
+2024-05-13              Gujarat Titans       Kolkata Knight Riders             IPL do-or-die (loss = out / near-out) (1.5)
+2024-05-14              Delhi Capitals        Lucknow Super Giants             IPL do-or-die (loss = out / near-out) (1.5)
+2024-05-14        Lucknow Super Giants              Delhi Capitals IPL do-or-die (loss = out / near-out) (1.5); Away (1.2)
+2024-05-15                Punjab Kings            Rajasthan Royals         IPL already out (dead rubber) (0.8); Away (1.2)
+2024-05-16              Gujarat Titans         Sunrisers Hyderabad         IPL already out (dead rubber) (0.8); Away (1.2)
+2024-05-17              Mumbai Indians        Lucknow Super Giants                     IPL already out (dead rubber) (0.8)
+2024-05-17        Lucknow Super Giants              Mumbai Indians IPL do-or-die (loss = out / near-out) (1.5); Away (1.2)
+2024-05-18 Royal Challengers Bengaluru         Chennai Super Kings             IPL do-or-die (loss = out / near-out) (1.5)
+2024-05-18         Chennai Super Kings Royal Challengers Bengaluru IPL do-or-die (loss = out / near-out) (1.5); Away (1.2)
+2024-05-19                Punjab Kings         Sunrisers Hyderabad         IPL already out (dead rubber) (0.8); Away (1.2)
