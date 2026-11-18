@@ -102,6 +102,37 @@ for role, mid in [("bat", ["pres_SR", "pres_xSR", "pres_outs", "pres_x_outs"]),
     d["country"] = d.country.fillna("")
     data[f"rank_{role}"] = d.round(4)
 
+# ---------------- alternative settings: rank of each top-15 player under each one ----------------
+for role in ["bat", "bowl"]:
+    main = pd.read_csv(ROOT / f"outputs/step5_{role}_min150.csv")
+    alt = {th: pd.read_csv(ROOT / f"outputs/step5_{role}_min{th}.csv").set_index("player")["rank"] for th in (100, 250)}
+    t = main[main["rank"] <= 15][["rank", "player", "rank_top15pct_cut", "rank_top25pct_cut", "rank_IPL_only", "rank_T20I_only"]].copy()
+    t.insert(2, "min100", t.player.map(alt[100]))
+    t.insert(3, "min250", t.player.map(alt[250]))
+    ranks = t.drop(columns=["player"])
+    t["settings_in_top10"] = (ranks <= 10).sum(axis=1).astype(int)
+    t["settings_qualified"] = ranks.notna().sum(axis=1).astype(int)
+    data[f"robust_{role}"] = t.astype({c: "Int64" for c in ranks.columns})
+
+# ---------------- data coverage ----------------
+facts = (ROOT / "outputs/report_facts.txt").read_text(encoding="utf-8")
+num = lambda pat: int(re.search(pat, facts)[1].replace(",", ""))
+share = re.search(r"Pressure-ball share by competition \(batting\): \{'T20I': ([\d.]+).*?all balls: \{'T20I': ([\d.]+)", facts)
+dates = pd.to_datetime(imp.match_date)
+data["coverage"] = pd.DataFrame([dict(key=k, label=l, value=v, note=n) for k, l, v, n in [
+    ("period", "Period", f"{dates.min():%b %Y} – {dates.max():%b %Y}", "IPL 2022–2026 seasons and men's T20Is in the same years."),
+    ("matches", "Matches with ball-by-ball data", num(r"matches (\d+)"), "883 matches are listed; 16 have no ball-by-ball data."),
+    ("balls", "Balls", num(r"Balls ([\d,]+)"), "Every delivery, with score, wickets, target and required rate rebuilt before each ball."),
+    ("ipl", "IPL matches", num(r"IPL matches (\d+)"), "Five seasons, all playoffs included."),
+    ("t20i", "T20I matches", num(r"T20I (\d+)"), "Bilateral series, Asia Cup 2022 and 2025, and tri-series. No T20 World Cups in the data."),
+    ("ateam", "Emerging / A-team matches", num(r"A-team (\d+)"), "Emerging Teams Asia Cup 2024 and Asia Cup Rising Stars 2025."),
+    ("t20i_share", "Pressure balls from T20Is", f"{round(100 * float(share[1]))}%",
+     f"T20Is are {round(100 * float(share[2]))}% of all balls; bigger matches push more of them into the pressure band."),
+    ("bat_pool", "Batters ranked", len(data["rank_bat"]), "At least 150 pressure balls faced."),
+    ("bowl_pool", "Bowlers ranked", len(data["rank_bowl"]), "At least 150 pressure balls bowled."),
+    ("external", "Outside data", "Cricsheet", "Men's T20I results from 2018, used only to rebuild ICC team ratings and recent form. Cricsheet withholds Afghanistan's matches, so their rating is partly rebuilt."),
+]])
+
 ch = pd.read_csv(ROOT / "outputs/report_example_chase.csv")
 ch["ball"] = (ch.overid.astype(int) - 1).astype(str) + "." + ch.over_ball_num.astype(str)
 ch["pressure_ball"] = ch.pct_bat >= 80
@@ -196,7 +227,9 @@ window.dash = (() => {
     start: () => {
       started = true; runAll();
       let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(runAll, 150); });
-      new MutationObserver(runAll).observe(document.body, { attributes: true, attributeFilter: ['hidden'], subtree: true });
+      // redraw when a section is shown (tooltips also toggle `hidden`, so ignore them)
+      new MutationObserver((ms) => { if (ms.some((m) => !m.target.classList.contains('rr-tip'))) runAll(); })
+        .observe(document.body, { attributes: true, attributeFilter: ['hidden'], subtree: true });
       if (document.fonts) document.fonts.ready.then(runAll);
     },
   };
