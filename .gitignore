@@ -7,6 +7,7 @@
 !/requirements.txt
 !/run_all.py
 !/.gitignore
+!/docs/
 __pycache__/
 *.pyc
 outputs/report_edits_*.md

@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 ZIP = ROOT / "data/external/cricsheet_t20i/t20s_male_json.zip"
 STEPS = ["01_cricsheet_results", "02_ball_states", "03_team_strength", "04_match_importance", "05_pressure",
-         "06_player_values", "07_ratings", "08_review_workbook", "09_report_tables"]
+         "06_player_values", "07_ratings", "08_review_workbook", "09_report_tables", "10_dashboard"]
 
 if not (ROOT / "Updated Data" / "ball_by_ball.csv").exists():
     sys.exit("Put the supplied CSV files (ball_by_ball, matches, competitions, teams ...) in the 'Updated Data' folder.")

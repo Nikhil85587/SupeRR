@@ -16,7 +16,7 @@ python -P -E run_all.py
 ```
 
 This downloads the public Cricsheet men's T20I results (used only for team ratings and form) if they are missing,
-then runs the nine steps below in order (about 15 minutes of compute). `data/` holds downloads and intermediate
+then runs the ten steps below in order (about 15 minutes of compute). `data/` holds downloads and intermediate
 files; `outputs/` holds the results, which are committed here so they can be read without re-running.
 
 | Step | Script | What it does |
@@ -30,11 +30,13 @@ files; `outputs/` holds the results, which are committed here so they can be rea
 | 7 | `src/07_ratings.py` | Usual vs pressure level, pull toward usual level, consistency, rise (all seasons weighted equally), rankings at 100/150/250 pressure balls, 300 match re-draws |
 | 8 | `src/08_review_workbook.py` | `outputs/step5_rankings.xlsx` (all lists + column guide) |
 | 9 | `src/09_report_tables.py` | Tables used in the methodology report |
+| 10 | `src/10_dashboard.py` | Interactive dashboard, one self-contained page: `docs/index.html` (published with GitHub Pages) |
 
 ## Main outputs
 
 - `outputs/step5_bat_min150.csv`, `outputs/step5_bowl_min150.csv` — the submitted rankings (minimum 150 pressure balls).
 - `outputs/step5_rankings.xlsx` — every list with its reliability columns.
+- `docs/index.html` — interactive dashboard: every weight with its reason, a weight calculator, an example chase and the rankings. Live at https://nikhil85587.github.io/SupeRR/
 - `outputs/pressure_validation.txt` — win-model accuracy and the check that pressure balls play differently.
 
 ## What changed in the updated data set (2026-11-15)
