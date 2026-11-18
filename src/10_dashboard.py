@@ -162,7 +162,7 @@ HEAD = """<!doctype html>
 <meta name="description" content="Who performs best under pressure in IPL and T20I cricket, 2022-2026: every weight, its reason, and the rankings.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>/*D3*/</script>
 <style>
 :root {
   --color-bg: #f7f8fa; --color-panel: #ffffff; --color-fg: #17202e; --color-fg-muted: #5b6577; --color-border-line: #dfe3ea;
@@ -194,6 +194,7 @@ html, body { margin: 0; background: var(--color-bg); color: var(--color-fg); fon
 </style>
 </head>
 <body>
+<noscript><p style="padding:16px">This dashboard draws its charts and tables with JavaScript. Please turn JavaScript on, or see the results files at https://github.com/Nikhil85587/SupeRR/tree/main/outputs</p></noscript>
 <div class="rr-page">
 """
 
@@ -246,7 +247,10 @@ FOOT = """
 </html>
 """
 
-page = HEAD + embedded + "\n" + SHIM + template + FOOT
+# d3 v7.9.0 (ISC licence) is built into the page, so it works offline and without any CDN
+d3 = (ROOT / "src/vendor/d3.min.js").read_text(encoding="utf-8")
+assert "</script" not in d3
+page = HEAD.replace("/*D3*/", d3) + embedded + "\n" + SHIM + template + FOOT
 (OUT / "index.html").write_text(page, encoding="utf-8")
 (OUT / ".nojekyll").write_text("", encoding="utf-8")
 print("written", OUT / "index.html", f"{len(page) / 1024:.0f} KB")

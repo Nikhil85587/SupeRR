@@ -111,6 +111,7 @@
     <span class="rr-eyebrow">SupeRR Selector Season 2 · Round 1 · IPL and T20I, 2022–2026</span>
     <h1>Who performs best under pressure</h1>
     <p class="rr-lead">Under pressure, <b data-draw="top-bat" data-source="rank_bat" data-field="player" data-row="0">—</b> leads the batters and <b data-draw="top-bowl" data-source="rank_bowl" data-field="player" data-row="0">—</b> leads the bowlers. The rankings cover <b data-draw="pool-bat" data-source="pool" data-field="players" data-where="role=bat">—</b> batters and <b data-draw="pool-bowl" data-source="pool" data-field="players" data-where="role=bowl">—</b> bowlers who faced or bowled at least <b data-draw="minballs">—</b> pressure balls.</p>
+    <h3 id="glance">The method at a glance</h3>
     <div class="rr-chips" data-draw="chips" data-source="coverage"></div>
     <p class="rr-muted">Every weight on this page has a reason. Point at any bar, box or row to see it. On a phone, tap.</p>
     <nav class="rr-nav" aria-label="Sections">
@@ -130,7 +131,7 @@
   <section class="rr-section" id="answers">
     <div class="rr-sec-head">
       <h2>The answer: top 10 under pressure</h2>
-      <p class="rr-muted">Ordered by final score. The percentage is how often the player stayed in the top 10 when the matches were re-drawn 300 times; higher means a safer pick.</p>
+      <p class="rr-muted">Ordered by final score. The percentage is how often the player stayed in the top 10 when the matches were re-drawn 300 times.</p>
     </div>
     <div class="rr-grid2">
       <div class="rr-card">
@@ -142,7 +143,8 @@
         <ol class="rr-top10" data-draw="answers" data-role="bowl" data-source="rank_bowl"></ol>
       </div>
     </div>
-    <p class="rr-small">Final score = <span data-draw="w-pres">—</span> pressure level + <span data-draw="w-cons">—</span> consistency + <span data-draw="w-rise">—</span> rise over the player's usual level. The steps below show how each part is built.</p>
+<div class="rr-formula"><b>Reading the percentage.</b> "89% top 10" means the player was in the top 10 in 89% of 300 re-draws (about 267 of them). Each re-draw picks matches at random, with replacement, from the real ones and re-runs the whole rating. It is <b>not</b> an 89% chance of being the best player, and not a chance of finishing first. It only says how much the top-10 place depends on which matches happen to be in the data: higher means a safer pick.</div>
+    <div class="rr-formula"><b>S = <span data-draw="wd" data-key="pres_level" data-source="model_settings" data-field="percent" data-where="key=pres_level">—</span> P + <span data-draw="wd" data-key="consistency" data-source="model_settings" data-field="percent" data-where="key=consistency">—</span> C + <span data-draw="wd" data-key="rise" data-source="model_settings" data-field="percent" data-where="key=rise">—</span> R</b><br><span class="rr-small">S = final score · P = pressure level (runs added per 100 pressure balls) · C = consistency (good innings %, typical innings and bad-day % combined) · R = rise over the player's usual level. Each of P, C and R is a z-score within the ranked pool: 0 is the pool average, +1 is one standard deviation better.</span></div>
   </section>
 
   <section class="rr-section" id="pressure">
@@ -290,16 +292,16 @@
       <h2>Rankings: what each score is made of</h2>
       <p class="rr-muted">Bars show each part's share of the final score: pressure level, consistency and rise over the usual level. Bars to the left pull a player down. Top 20 shown; the top 10 are in full colour.</p>
     </div>
+    <div class="rr-formula" id="formula">
+      <b>S = <span data-draw="wd" data-key="pres_level" data-source="model_settings" data-field="percent" data-where="key=pres_level">—</span> P + <span data-draw="wd" data-key="consistency" data-source="model_settings" data-field="percent" data-where="key=consistency">—</span> C + <span data-draw="wd" data-key="rise" data-source="model_settings" data-field="percent" data-where="key=rise">—</span> R</b><br>
+      <span class="rr-small">S = final score · P = pressure level (runs added per 100 pressure balls) · C = consistency (good innings %, typical innings and bad-day % combined) · R = rise over the player's usual level. Each of P, C and R is a z-score within the ranked pool: 0 is the pool average, +1 is one standard deviation better.</span>
+    </div>
     <div class="rr-toolbar">
       <div class="rr-roles" role="group" aria-label="Show batters or bowlers">
         <button type="button" class="rr-btn" data-role-btn="bat" aria-pressed="true">Batters</button>
         <button type="button" class="rr-btn" data-role-btn="bowl" aria-pressed="false">Bowlers</button>
       </div>
       <div class="rr-legend" data-draw="parts-legend"></div>
-    </div>
-    <div class="rr-formula" id="formula">
-      <b>Final score</b> = <span data-draw="w-pres">—</span> × z(pressure level) + <span data-draw="w-cons">—</span> × z(consistency) + <span data-draw="w-rise">—</span> × z(rise)<br>
-      <span class="rr-small">z( ) puts each part on the same scale within the ranked pool: 0 is the pool average, +1 is one standard deviation better. Consistency = average of z(good innings %), z(typical innings) and −z(bad-day %).</span>
     </div>
 
     <div id="sec-bat" class="rr-section" data-role-sec="bat">
@@ -354,7 +356,7 @@
     <div class="rr-sec-head">
       <span class="rr-step">Step 7</span>
       <h2>How sure are we about each rank?</h2>
-      <p class="rr-muted">The matches were re-drawn at random 300 times and the whole rating re-run each time. The line shows where a player's rank landed 90% of the time; the number on the right is how often they made the top 10.</p>
+      <p class="rr-muted">The matches were re-drawn at random 300 times and the whole rating re-run each time. The line shows where a player's rank landed 90% of the time; the number on the right is how often they made the top 10. That is a measure of stability, not a probability of being the best.</p>
     </div>
     <div class="rr-card" data-role-sec="bat">
       <h3 id="bat-range">Batters: rank range</h3>
@@ -416,6 +418,8 @@
 <script>
 window.RR = window.RR || { role: 'bat', team: '' };
 RR.MIN_BALLS = 150;      // ranking threshold chosen for the submitted lists
+RR.REDRAWS = 300;        // bootstrap re-draws of matches in src/07
+RR.BAND = 20;            // pressure balls = top 20% of balls
 RR.CAP = 1.65;           // highest weight any non-knockout game can carry
 RR.A_TEAM = 0.7;         // multiplier for Emerging / A-team events
 
@@ -541,6 +545,10 @@ dash.calc('bowl_parts', {
 
 <script>
 // ---------- headline answers, chips, coverage ----------
+dash.draw('wd', (el) => {
+  const d = dash.data('model_settings');
+  el.textContent = d.status === 'ok' ? String(+d.data.find((x) => x.key === el.dataset.key).percent / 100) : '—';
+});
 ['pres_level', 'consistency', 'rise'].forEach((k, i) => dash.draw(['w-pres', 'w-cons', 'w-rise'][i], (el) => {
   const d = dash.data('model_settings');
   el.textContent = d.status === 'ok' ? +d.data.find((x) => x.key === k).percent + '%' : '—';
@@ -570,7 +578,8 @@ dash.draw('chips', (el) => {
   const by = Object.fromEntries(d.data.map((r) => [r.key, r]));
   const fmt = (v) => (/^\d+$/.test(v) ? RR.int(+v) : v);
   const items = [['Period', by.period.value], ['Balls analysed', fmt(by.balls.value)], ['Matches', fmt(by.matches.value)],
-    ['Ranked', `${by.bat_pool.value} batters · ${by.bowl_pool.value} bowlers`], ['Minimum', `${RR.MIN_BALLS} pressure balls`]];
+    ['Eligible batters / bowlers', `${by.bat_pool.value} / ${by.bowl_pool.value}`], ['Minimum', `${RR.MIN_BALLS} pressure balls`],
+    ['Pressure balls', `top ${RR.BAND}% of deliveries`], ['Random match re-draws', RR.REDRAWS]];
   el.replaceChildren(...items.map(([k, v]) => {
     const c = document.createElement('div'); c.className = 'rr-chip';
     const a = document.createElement('span'); a.textContent = k;
