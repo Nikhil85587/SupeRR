@@ -66,10 +66,10 @@ b["vs_rpb"] = b.vs_rpb.fillna(gm_r); b["vs_wpb"] = b.vs_wpb.fillna(gm_o)
 # --pitch opp           : only the OPPOSITION's batters / bowlers (same pitch, so a strong own attack/line-up does not
 #                         make the benchmark harsher). Writes ball_values_opp.parquet (test variant).
 PITCH = sys.argv[sys.argv.index("--pitch") + 1] if "--pitch" in sys.argv else "both"
-# --quality (TEST variant): also allow for the quality of the opponent on each ball (bowler faced / batter bowled to),
-# measured as that player's runs added vs expected in OTHER matches (leave-one-match-out), pulled toward 0 with the
-# split-half pull strengths. Second pass of the expected models. DEFAULT ON;
-# --no-quality turns it off.
+# Opponent quality (DEFAULT ON; --no-quality turns it off): also allow for the quality of the opponent on each ball
+# (bowler faced / batter bowled to), measured as that player's runs added vs expected in OTHER matches
+# (leave-one-match-out), pulled toward 0 with split-half pull strengths measured on the first-pass values.
+# Second pass of the expected models.
 QUALITY = "--no-quality" not in sys.argv
 K_MATCH = 120
 base_r = b.groupby("match_id").vs_rpb.first(); base_w = b.groupby("match_id").vs_wpb.first()
@@ -126,13 +126,32 @@ if QUALITY:
         oth_n = tot.n.reindex(pm.index.get_level_values(0)).values - pm.n.values
         return pd.Series(oth_v / (oth_n + k), index=pm.index)
 
+    def split_half_k(df, pid, val, n, min_balls=600):
+        """Pull strength from repeatability, same rule as step 07: each player's matches split into alternate halves
+        (players with >= min_balls), r = correlation of the halves, k = n_half (1 - r) / r."""
+        t = pd.DataFrame({"pid": df[pid].values, "h": (df.groupby(pid).match_id.rank(method="dense") % 2).values,
+                          "s": np.asarray(val, dtype=float), "n": np.asarray(n, dtype=float)})
+        g = t.groupby(["pid", "h"]).sum().unstack()
+        ok = g[(g[("n", 0)] >= min_balls / 2) & (g[("n", 1)] >= min_balls / 2)]
+        r = np.corrcoef(ok[("s", 0)] / ok[("n", 0)], ok[("s", 1)] / ok[("n", 1)])[0, 1]
+        nh = np.median(np.r_[ok[("n", 0)], ok[("n", 1)]])
+        return nh * (1 - r) / max(r, 0.02)
+
     allb = b[~b.is_super_over]
     lg = allb.legal.astype(int)
-    q_be = loo_quality(allb, "bowler_id", allb.exp_bruns - allb.bowler_runs, lg, 371)
-    q_bw = loo_quality(allb, "bowler_id", allb.wicket_value * (allb.bowler_wicket.astype(float) - allb.exp_bwk), lg, 3306)
     fb = b[b.faced & ~b.is_super_over]
-    q_ss = loo_quality(fb, "striker_id", fb.runs - fb.exp_runs, pd.Series(1, index=fb.index), 412)
-    q_so = loo_quality(fb, "striker_id", fb.wicket_value * (fb.exp_out - fb.batter_out.astype(float)), pd.Series(1, index=fb.index), 1203)
+    one = pd.Series(1, index=fb.index)
+    parts = {"bowl economy": (allb, "bowler_id", allb.exp_bruns - allb.bowler_runs, lg),
+             "bowl wickets": (allb, "bowler_id", allb.wicket_value * (allb.bowler_wicket.astype(float) - allb.exp_bwk), lg),
+             "bat scoring": (fb, "striker_id", fb.runs - fb.exp_runs, one),
+             "bat dismissals": (fb, "striker_id", fb.wicket_value * (fb.exp_out - fb.batter_out.astype(float)), one)}
+    # pull strengths are measured on this data (first-pass values), never typed in, so they stay right if the data change
+    K_Q = {name: split_half_k(*p) for name, p in parts.items()}
+    print("quality pull strengths k (balls): " + ", ".join(f"{name} {k:.0f}" for name, k in K_Q.items()))
+    q_be = loo_quality(*parts["bowl economy"], K_Q["bowl economy"])
+    q_bw = loo_quality(*parts["bowl wickets"], K_Q["bowl wickets"])
+    q_ss = loo_quality(*parts["bat scoring"], K_Q["bat scoring"])
+    q_so = loo_quality(*parts["bat dismissals"], K_Q["bat dismissals"])
     kb = pd.MultiIndex.from_arrays([b.bowler_id, b.match_id]); ks = pd.MultiIndex.from_arrays([b.striker_id, b.match_id])
     b["opp_bowler_q_econ"] = q_be.reindex(kb).fillna(0).values
     b["opp_bowler_q_wkt"] = q_bw.reindex(kb).fillna(0).values

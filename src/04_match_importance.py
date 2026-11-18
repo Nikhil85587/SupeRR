@@ -14,7 +14,7 @@ P = ROOT / "data/processed"
 W = dict(t20i_base=1.15, top3=1.4, rival=1.75, associate=0.9, t20i_final=2.0, super4=1.3, decider=1.5, must_win=1.65,
          ipl_q1=1.4, ipl_elim=1.7, ipl_q2=1.75, ipl_final=2.0, semi_final=1.75, do_or_die=1.5,
          dead_rubber=0.8, away=1.2, neutral=1.1, a_team_base=0.7)
-NON_KO_CAP = 1.65  # max importance for any game that is not a final / IPL playoff / semi-final
+NON_KO_CAP = 1.65  # max importance for any game that is not a final / IPL playoff / semi-final (reason: see the cap below)
 RIVALS = [{"India", "Pakistan"}, {"Australia", "England"}, {"Bangladesh", "Sri Lanka"}]
 COUNTRY = {"England": "United Kingdom", "Scotland": "United Kingdom", "United States of America": "United States",
            "United States Of America": "United States"}
@@ -158,8 +158,10 @@ for r in m.itertuples():
         boosts = sorted([w for w in pool if w >= 1], reverse=True)[:2]
         discounts = [w for w in pool if w < 1]
         weight = float(np.prod(boosts) if boosts else 1.0) * (min(discounts) if discounts else 1.0)
-        # cap (decided after re-reading the brief): a non-knockout game can never carry more weight than the
-        # lowest IPL playoff (1.65), so bilateral must-wins/rivalries cannot outrank IPL playoffs or finals
+        # cap (decided after re-reading the brief): a non-knockout game can never carry more than 1.65, so no
+        # bilateral must-win / rivalry / do-or-die league game outweighs a knockout where the loser is out
+        # (IPL Eliminator 1.7, Qualifier 2 1.75, semi-finals 1.75, finals 2.0). IPL Qualifier 1 (1.4) sits below
+        # the cap on purpose: its loser still plays Qualifier 2, so it is less of a must-win.
         is_knockout = any(k in reason for reason, _ in f for k in ("Final", "Qualifier", "Eliminator", "Semi-final"))
         if not is_knockout:
             weight = min(weight, NON_KO_CAP)

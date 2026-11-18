@@ -226,6 +226,9 @@ for role in ["bat", "bowl"]:
         notes.append(f"[{role}] {part}: split-half r {split_half_k(role, part)[1]:.2f} | pull strength: normal level k={k_norm[i]:.0f} balls, "
                      f"pressure level k={k_pres[i]:.0f} balls")
     notes.append(f"[{role}] league-wide change under pressure {100*shift:+.2f} runs/100 balls")
+    # repeatability of pressure form itself (quoted in the report): total value on pressure balls only, >= 75 per half
+    notes.append(f"[{role}] pressure balls only, total value: split-half r "
+                 f"{split_half_k(role, ROLE[role]['val'], min_balls=150, high_only=True)[1]:.2f}")
     extra = describe(role)
     # robustness inputs computed once
     alt = {c: rate(player_match(role, c), sigma2, k_norm, k_pres, role=role)[0] for c in (75, 85)}
